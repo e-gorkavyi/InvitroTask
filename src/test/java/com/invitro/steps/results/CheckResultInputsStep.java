@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Condition.*;
 
-public class CheckAttentionStep {
+public class CheckResultInputsStep {
 
     private static final String ERROR_INPUT_CLASS = "Input_error__TVQ0l";
     private final SelenideElement pageErrorHeader = $("div.UnauthResultsPage_error__m2C-2");
@@ -32,5 +32,12 @@ public class CheckAttentionStep {
         birthdayInput.click();
         birthdayInput.sendKeys(birthday);
         lastNameInput.sendKeys(lastName);
+    }
+
+    @Then("Проверить что в полях указано: код {string}, дата рождения {string}, фамилия {string}")
+    public void checkInputs(String code, String birthday, String lastName) {
+        orderNumberInput.shouldHave(value(code));
+        birthdayInput.shouldHave(value(birthday));
+        lastNameInput.shouldHave(value(lastName));
     }
 }
