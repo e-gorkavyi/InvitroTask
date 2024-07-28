@@ -7,9 +7,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
+import static com.codeborne.selenide.Condition.cssClass;
+import static com.codeborne.selenide.Condition.href;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Condition.*;
 
 public class ChooseSectionStep {
 
@@ -22,7 +23,7 @@ public class ChooseSectionStep {
         chooseButton.click();
     }
 
-    @And("Кликаем {string}")
+    @And("^Кликаем \"(Пациентам|Врачам|Франчайзинг|Корпоративным клиентам|Прессе)\"$")
     public void clickSectionByName(String sectionName) {
         String sectionUrl = SiteSections.getSectionUrl(sectionName);
         Assertions.assertNotNull(sectionUrl, "Наименование пункта не может быть произвольным");

@@ -8,8 +8,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.invitro.ui.enums.Context.CITY_NAME;
@@ -19,7 +21,7 @@ public class SityChangeStep {
     private final SelenideElement cityButton = $("span.city__name.city__btn");
     private final SelenideElement chooseAnotherCity = $("a.btn--empty.city__change-btn");
     private final SelenideElement changeCitySearch = $("input.change-city-search-input");
-    private final ElementsCollection autoFoundCityName = $$(".easy-autocomplete-container .eac-item");
+    private final ElementsCollection autoFoundCityName = $$(".easy-autocomplete-container .eac-item > b");
     private final ScenarioContext context = ScenarioContext.getInstance();
 
     @When("Нажимаем на элемент выбора города, нажимаем 'выбрать другой', в поле поиска вводим {string}")
@@ -32,9 +34,13 @@ public class SityChangeStep {
 
     @And("Проверяем что в списке есть нужный город и кликаем на него")
     public void checkCityList() {
+        Assertions.assertEquals(context.getContext(CITY_NAME),
+                autoFoundCityName
+                        .filter(text((String) context.getContext(CITY_NAME))).first().getText());
         autoFoundCityName
                 .filterBy(exactText((String) context.getContext(CITY_NAME)))
-                .forEach(x -> x.shouldBe(visible).click());
+                .first()
+                .click();
     }
 
     @Then("Проверяем что в элементе выбора города отобразился выбранный")

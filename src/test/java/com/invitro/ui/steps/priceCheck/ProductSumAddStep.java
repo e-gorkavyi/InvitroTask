@@ -1,6 +1,5 @@
 package com.invitro.ui.steps.priceCheck;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
@@ -12,7 +11,6 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.invitro.ui.enums.Context.*;
 
 public class ProductSumAddStep {
-    private final ElementsCollection productCards = $$("div.analyzes-item");
     private final ScenarioContext context = ScenarioContext.getInstance();
 
     @Given("Переходим на страницу каталога анализов {string}")
